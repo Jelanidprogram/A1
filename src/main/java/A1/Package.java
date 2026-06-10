@@ -9,10 +9,10 @@ import java.util.List;
 public class Package {
 
     // TODO M1: Initialise this static counter to 1.
-    private static int nextTrackingNumber;
+    private static int nextTrackingNumber = 1;
 
     private static final List<String> VALID_DESTINATIONS = Arrays.asList(
-        "Trinidad", "Barbados", "Jamaica", "Antigua", "Grenada"
+            "Trinidad", "Barbados", "Jamaica", "Antigua", "Grenada"
     );
 
     // TODO M1: These fields are declared but not yet assigned.
@@ -44,13 +44,46 @@ public class Package {
                    int lengthCm, int widthCm, int heightCm,
                    String destination, boolean isFragile, double declaredValue) {
         // TODO M2: Write validation and field assignments here
-    }
+        if (senderName == null || senderName.equals(" ")) {
+            throw new IllegalArgumentException("Sender must not be null or empty");
+        }
 
-    /**
-     * Convenience constructor: not fragile, no declared value.
-     * TODO M3: Chain to the full constructor using this(...) with
-     *   isFragile=false and declaredValue=0.0
-     */
+        if (receiverName == null || receiverName.equals(" ")) {
+            throw new IllegalArgumentException("Receiver name must not be noll or empty");
+        }
+        if (weightKg <= 0) {
+            throw new IllegalArgumentException("Weight must not be less than or equivalent to 0!");
+        }
+
+        if (senderName == null || senderName.equals("") && (receiverName == null || receiverName.equals(" ") && (weightKg <= 0))) {
+            throw new IllegalArgumentException("Please check your fields, they are not meeting the requirements");
+        }
+
+        if (destination.equals("Trinidad") || destination.equals("Barbados") || destination.equals("Jamaica") || destination.equals("Antigua") || destination.equals("Grenada")) {
+            System.out.println(VALID_DESTINATIONS);
+        } else {
+            throw new IllegalArgumentException("Destination not found");
+        }
+            trackingId = String.format("PKG-%04d", nextTrackingNumber);
+            nextTrackingNumber++;
+
+            this.senderName = senderName;
+            this.declaredValue = declaredValue;
+            this.isFragile = isFragile;
+            this.destination = destination;
+            this.heightCm = heightCm;
+            this.widthCm = widthCm;
+            this.weightKg = weightKg;
+            this.lengthCm = lengthCm;
+            this.receiverName = receiverName;
+        }
+
+        /**
+         * Convenience constructor: not fragile, no declared value.
+         * TODO M3: Chain to the full constructor using this(...) with
+         *   isFragile=false and declaredValue=0.0
+         */
+/*
     public Package(String senderName, String receiverName, double weightKg,
                    int lengthCm, int widthCm, int heightCm, String destination) {
         // TODO M3: Write the this(...) call here
@@ -67,21 +100,21 @@ public class Package {
     /**
      * TODO M5: Return lengthCm * widthCm * heightCm
      */
-    public int getVolumeCm3() {
+/*    public int getVolumeCm3() {
         return 0; // TODO M5
     }
 
     /**
      * TODO M5: Return getVolumeCm3() / 5000.0
      */
-    public double getVolumetricWeightKg() {
+/*    public double getVolumetricWeightKg() {
         return 0.0; // TODO M5
     }
 
     /**
      * TODO M5: Return Math.max(weightKg, getVolumetricWeightKg())
      */
-    public double getBillableWeightKg() {
+/*    public double getBillableWeightKg() {
         return 0.0; // TODO M5
     }
 
@@ -93,7 +126,7 @@ public class Package {
      *   4. If declaredValue > 0: cost += declaredValue * 0.015
      *   5. Round: Math.round(cost * 100) / 100.0
      */
-    public double getShippingCost() {
+/*    public double getShippingCost() {
         return 0.0; // TODO M6
     }
 
@@ -103,8 +136,12 @@ public class Package {
      * If fragile, append "  [FRAGILE]" at the end.
      * Use String.format for formatting.
      */
-    @Override
+  /*  @Override
     public String toString() {
         return ""; // TODO M7
     }
-}
+
+
+   */
+    }
+

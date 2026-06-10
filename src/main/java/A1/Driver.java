@@ -9,7 +9,11 @@ package A1;
 public class Driver {
 
     public static void main(String[] args) {
-
+Package p1 = new Package("Alice", "Bob",5.0,40,30,20,"Trinidad",false,0.0);
+Package p2 = new Package((" " ),"Bob", 5.0, 40, 30, 20,
+        "Trinidad", false, 0.0);
+System.out.println(p1);
+System.out.println(p2);
         // Step 1: Create the terminal
         // TODO M10: Create a FreightTerminal named "Port of Spain Hub"
 

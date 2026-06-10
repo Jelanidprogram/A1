@@ -19,6 +19,10 @@ public class FreightTerminal {
      */
     public FreightTerminal(String terminalName) {
         // TODO M2
+        this.terminalName=terminalName;
+        pendingPackages =new ArrayList<Package>();
+        activeContainers =new ArrayList<Container>();
+        dispatchedContainers = new ArrayList<Container>();
     }
 
     /**
