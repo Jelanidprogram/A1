@@ -30,15 +30,16 @@ public class FreightTerminal {
      */
     public void receivePackage(Package p) {
         // TODO M4
+            if (p != null) {
+                pendingPackages.add(p);
+            }
     }
-
     /**
      * TODO M4: Return the size of pendingPackages.
      */
     public int getPendingCount() {
-        return 0; // TODO M4
+        return pendingPackages.size(); // TODO M4
     }
-
     /**
      * TODO M8: This is the HARD method. Group pending packages by destination.
      *   1. Collect unique destinations in the order they first appear.

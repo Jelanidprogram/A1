@@ -83,10 +83,11 @@ public class Package {
          * TODO M3: Chain to the full constructor using this(...) with
          *   isFragile=false and declaredValue=0.0
          */
-/*
+// 7 argument constructor
     public Package(String senderName, String receiverName, double weightKg,
                    int lengthCm, int widthCm, int heightCm, String destination) {
         // TODO M3: Write the this(...) call here
+        this(senderName,receiverName,weightKg,lengthCm,widthCm,heightCm,destination,false,0.0);
     }
 
     // --- Getters ---
@@ -96,25 +97,34 @@ public class Package {
     //   isFragile(), getDeclaredValue()
 
     // --- Computed methods ---
-
+    public String getTrackingId(){return trackingId;}
+    public String getSenderName(){return senderName;}
+    public String getReceiverName(){return receiverName;}
+    public double getWeightKg(){return weightKg;}
+    public int getLengthCm(){return lengthCm;}
+    public int getWidthCm(){return widthCm;}
+    public int getHeightCm(){return heightCm;}
+    public String getDestination(){return destination;}
+    public Boolean getIsFragile(){return isFragile;}
+    public double getDeclaredValue(){return declaredValue;}
     /**
      * TODO M5: Return lengthCm * widthCm * heightCm
      */
-/*    public int getVolumeCm3() {
+    public int getVolumeCm3() {
         return 0; // TODO M5
     }
 
     /**
      * TODO M5: Return getVolumeCm3() / 5000.0
      */
-/*    public double getVolumetricWeightKg() {
+    public double getVolumetricWeightKg() {
         return 0.0; // TODO M5
     }
 
     /**
      * TODO M5: Return Math.max(weightKg, getVolumetricWeightKg())
      */
-/*    public double getBillableWeightKg() {
+    public double getBillableWeightKg() {
         return 0.0; // TODO M5
     }
 
@@ -126,7 +136,7 @@ public class Package {
      *   4. If declaredValue > 0: cost += declaredValue * 0.015
      *   5. Round: Math.round(cost * 100) / 100.0
      */
-/*    public double getShippingCost() {
+    public double getShippingCost() {
         return 0.0; // TODO M6
     }
 
@@ -136,12 +146,12 @@ public class Package {
      * If fragile, append "  [FRAGILE]" at the end.
      * Use String.format for formatting.
      */
-  /*  @Override
+    @Override
     public String toString() {
         return ""; // TODO M7
     }
 
 
-   */
+
     }
 
