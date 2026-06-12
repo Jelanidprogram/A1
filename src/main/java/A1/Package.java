@@ -111,21 +111,21 @@ public class Package {
      * TODO M5: Return lengthCm * widthCm * heightCm
      */
     public int getVolumeCm3() {
-        return 0; // TODO M5
+        return lengthCm * widthCm * heightCm; // TODO M5
     }
 
     /**
      * TODO M5: Return getVolumeCm3() / 5000.0
      */
     public double getVolumetricWeightKg() {
-        return 0.0; // TODO M5
+        return getVolumeCm3() / 5000.0; // TODO M5
     }
 
     /**
      * TODO M5: Return Math.max(weightKg, getVolumetricWeightKg())
      */
     public double getBillableWeightKg() {
-        return 0.0; // TODO M5
+        return Math.max(weightKg,getVolumetricWeightKg()); // TODO M5
     }
 
     /**
@@ -137,7 +137,24 @@ public class Package {
      *   5. Round: Math.round(cost * 100) / 100.0
      */
     public double getShippingCost() {
-        return 0.0; // TODO M6
+        // TODO M6
+        double ratePerKg;
+        switch(destination){
+            case "Trinidad":ratePerKg = 8.00; break;
+            case "Barbados":ratePerKg = 12.50; break;
+            case "Jamaica":ratePerKg = 15.00; break;
+            case "Antigua":ratePerKg = 18.00; break;
+            case "Grenada":ratePerKg = 10.00; break;
+            default : ratePerKg = 0.0; break;
+        }
+    double cost = getBillableWeightKg() * ratePerKg;
+
+        if(isFragile){ cost *= 1.25;}
+
+        if(declaredValue > 0){
+            cost += declaredValue * 0.015;
+        }
+        return Math.round(cost*100) / 100.0;
     }
 
     /**
