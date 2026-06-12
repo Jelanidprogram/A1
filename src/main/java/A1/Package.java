@@ -165,10 +165,19 @@ public class Package {
      */
     @Override
     public String toString() {
-        return ""; // TODO M7
+        String base = String.format("PKG-%04d  %s -> %s  %s  %.2f kg  $%.2f",
+                Integer.parseInt(trackingId.substring(4)),
+                senderName, receiverName, destination,
+                getBillableWeightKg(), getShippingCost());
+
+        if (isFragile) {
+            base += "  [FRAGILE]";
+        }
+        return base;
+
+
     }
 
+}
 
-
-    }
 

@@ -78,8 +78,9 @@ public class Tester {
         System.out.println("Is Fragile --> " + test1.getIsFragile());
         System.out.println(test1.getShippingCost());
 
-
-
+// M7 Checki
+      Package p =  new Package("Alice","Bob",5.0,40,30,20,"Trinidad");
+      System.out.println(p);
     }
 }
 
