@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Container {
 
     // TODO M1: Initialise this static counter to 1.
-    private static int nextContainerId=1;
+    private static int nextContainerId = 1;
 
 
     // TODO M1: These fields are declared but not yet assigned.
@@ -28,15 +28,21 @@ public class Container {
      */
     public Container(String destination, double maxWeightKg) {
         // TODO M2
-        if(destination==null) {
+        if (destination == null) {
             throw new IllegalArgumentException("Ensure that a destination is selected");
         }
-        while(destination!=null && maxWeightKg > 0){
-            containerId = String.format("CNT=%03d",nextContainerId);
-            nextContainerId++;
-            packages = new ArrayList<Package>();
+
+        if (maxWeightKg <= 0) {
+            throw new IllegalArgumentException("Max Weight has to be greater than zero");
         }
+
+        this.destination = destination;
+        this.maxWeightKg = maxWeightKg;
+        containerId = String.format("CNT=%03d", nextContainerId);
+        nextContainerId++;
+        packages = new ArrayList<Package>();
     }
+
 
     /**
      * Convenience constructor: default capacity of 500 kg.
@@ -44,15 +50,23 @@ public class Container {
      */
     public Container(String destination) {
         // TODO M3: Write the this(...) call here
-        this.destination =destination;
-        maxWeightKg =500.0;
+        this(destination, 500.0);
     }
 
     // --- Getters ---
     // TODO M4: Write getters for containerId, destination, maxWeightKg
-    public String getContainderID(){return containerId;}
-    public String getDestination(){return destination;}
-    public double getMaxWeightKg(){return maxWeightKg;}
+    public String getContainderID() {
+        return containerId;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public double getMaxWeightKg() {
+        return maxWeightKg;
+    }
+
     /**
      * TODO M8: Add a package to this container.
      *   Return false if: p is null, p's destination does not match, or
@@ -61,27 +75,28 @@ public class Container {
      */
     public boolean addPackage(Package p) {
         // TODO M8
-        if (p == null){
-        return false;}
+        if (p == null) {
+            return false;
+        }
 
         if (!p.getDestination().equals(destination)) {
             return false;
         }
 
-        if (getCurrentWeightKg() + p.getWeightKg() > maxWeightKg){
+        if (getCurrentWeightKg() + p.getWeightKg() > maxWeightKg) {
             return false;
         }
         packages.add(p);
         return true;
-        }
+    }
 
     /**
      * TODO M8: Return the sum of all packages' weightKg.
      */
     public double getCurrentWeightKg() {
-double  totalWeight=0.0;
-        for (Package p : packages){
-totalWeight += p.getWeightKg();
+        double totalWeight = 0.0;
+        for (Package p : packages) {
+            totalWeight += p.getWeightKg();
         }
         return totalWeight; // TODO M8
     }
@@ -90,7 +105,7 @@ totalWeight += p.getWeightKg();
      * TODO M8: Return maxWeightKg - getCurrentWeightKg()
      */
     public double getRemainingCapacityKg() {
-        return maxWeightKg  - getCurrentWeightKg(); // TODO M8
+        return maxWeightKg - getCurrentWeightKg(); // TODO M8
     }
 
     /**
@@ -104,10 +119,10 @@ totalWeight += p.getWeightKg();
      * TODO M8: Return the sum of all packages' getShippingCost().
      */
     public double getTotalRevenue() {
-       double sum = 0.0;
-        for(Package p : packages){
-           sum += p.getShippingCost();
-       }
+        double sum = 0.0;
+        for (Package p : packages) {
+            sum += p.getShippingCost();
+        }
         return sum; // TODO M8
     }
 
@@ -123,8 +138,26 @@ totalWeight += p.getWeightKg();
      * Use StringBuilder and String.format.
      */
     public String getManifest() {
-        return ""; // TODO M9
+        StringBuilder s = new StringBuilder(); // TODO M9
+
+        s.append(String.format("=== %s -> %s (%d packages, %.2f / %.2f kg) ===",
+                containerId, destination, packages.size(),
+                getCurrentWeightKg(), maxWeightKg));
+        s.append("\n");
+
+        for(Package p : packages){
+            s.append("  "); // 2 space indentation
+            s.append(p.toString() + "\n");
+        }
+
+        s.append("  Container revenue: $");
+        s.append(String.format(".2f",getTotalRevenue()));
+
+        return s.toString();
+
+        // container revenue aka last line
     }
+
 
     /**
      * Returns the list of packages (needed by FreightTerminal.findPackage).
@@ -139,6 +172,11 @@ totalWeight += p.getWeightKg();
      */
     @Override
     public String toString() {
-        return ""; // TODO M9
+        // TODO M9
+        return String.format("%s -> %s [%d packages, %.2f / %.2f kg]",
+                containerId, destination, packages.size(),
+                getCurrentWeightKg(), maxWeightKg);
     }
+
+
 }

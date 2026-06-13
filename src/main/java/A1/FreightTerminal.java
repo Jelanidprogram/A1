@@ -19,9 +19,9 @@ public class FreightTerminal {
      */
     public FreightTerminal(String terminalName) {
         // TODO M2
-        this.terminalName=terminalName;
-        pendingPackages =new ArrayList<Package>();
-        activeContainers =new ArrayList<Container>();
+        this.terminalName = terminalName;
+        pendingPackages = new ArrayList<Package>();
+        activeContainers = new ArrayList<Container>();
         dispatchedContainers = new ArrayList<Container>();
     }
 
@@ -30,16 +30,18 @@ public class FreightTerminal {
      */
     public void receivePackage(Package p) {
         // TODO M4
-            if (p != null) {
-                pendingPackages.add(p);
-            }
+        if (p != null) {
+            pendingPackages.add(p);
+        }
     }
+
     /**
      * TODO M4: Return the size of pendingPackages.
      */
     public int getPendingCount() {
         return pendingPackages.size(); // TODO M4
     }
+
     /**
      * TODO M8: This is the HARD method. Group pending packages by destination.
      *   1. Collect unique destinations in the order they first appear.
@@ -50,7 +52,27 @@ public class FreightTerminal {
      *   6. Return the number of containers created.
      */
     public int packContainers() {
-        return 0; // TODO M8
+        // TODO M8
+        ArrayList<String> destinations = new ArrayList<>();
+        for (Package p : pendingPackages) {
+            if (!destinations.contains(p.getDestination())) {
+                destinations.add(p.getDestination());
+            }
+        }
+
+        for (String dest : destinations) {
+            Container c = new Container(dest);
+            for (Package p : pendingPackages) {
+                if (p.getDestination().equals(dest)) {
+                    c.addPackage(p);
+                }
+            }
+            activeContainers.add(c);
+
+        }
+        pendingPackages.clear();
+
+        return destinations.size();
     }
 
     /**
@@ -58,7 +80,14 @@ public class FreightTerminal {
      *   Clear activeContainers. Return the count dispatched.
      */
     public int dispatchAll() {
-        return 0; // TODO M9
+
+        int ac = activeContainers.size();
+        for (Container c : activeContainers) {
+            activeContainers.addAll(activeContainers);
+            activeContainers.clear();
+            ; // TODO M9
+        }
+        return ac;
     }
 
     /**
@@ -66,7 +95,12 @@ public class FreightTerminal {
      *   dispatched containers.
      */
     public double getTotalRevenue() {
-        return 0.0; // TODO M9
+        // TODO M9
+        double total = 0.0;
+        for(Container c : dispatchedContainers){
+            total+= c.getTotalRevenue();
+        }
+        return total;
     }
 
     /**
@@ -74,7 +108,11 @@ public class FreightTerminal {
      *   dispatched containers.
      */
     public int getTotalPackagesShipped() {
-        return 0; // TODO M9
+        int total = 0;
+        for(Container c : dispatchedContainers){
+            total += c.getPackageCount();
+        }
+        return total; // TODO M9
     }
 
     /**
@@ -82,8 +120,22 @@ public class FreightTerminal {
      *   containers for a package with the given tracking ID.
      *   Return the Package or null if not found.
      */
+         // TODO M9
     public Package findPackage(String trackingId) {
-        return null; // TODO M9
+        for (Package p : pendingPackages) {
+            if (p.getTrackingId().equals(trackingId)) {
+                return p;
+            }
+        }
+        // inactive container
+        for (Container c : dispatchedContainers) {
+            for (Package p : c.getPackages()) {
+                if (p.getTrackingId().equals(trackingId)) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 
     /**
