@@ -51,7 +51,7 @@ public class FreightTerminal {
      *   5. Clear pendingPackages.
      *   6. Return the number of containers created.
      */
-    public int packContainers() {
+    public int packContainers() {       //research
         // TODO M8
         ArrayList<String> destinations = new ArrayList<>();
         for (Package p : pendingPackages) {
@@ -80,15 +80,14 @@ public class FreightTerminal {
      *   Clear activeContainers. Return the count dispatched.
      */
     public int dispatchAll() {
-
+             // TODO M9
+// error when using activeContainers.size() by itself
         int ac = activeContainers.size();
-        for (Container c : activeContainers) {
-            activeContainers.addAll(activeContainers);
-            activeContainers.clear();
-            ; // TODO M9
-        }
+        dispatchedContainers.addAll(activeContainers);
+        activeContainers.clear();
         return ac;
-    }
+        }
+
 
     /**
      * TODO M9: Return the sum of getTotalRevenue() across all
@@ -123,8 +122,13 @@ public class FreightTerminal {
          // TODO M9
     public Package findPackage(String trackingId) {
         for (Package p : pendingPackages) {
-            if (p.getTrackingId().equals(trackingId)) {
+            if (p.getTrackingId().equals(trackingId))
                 return p;
+
+        }
+        for (Container c : activeContainers) {
+            for (Package p : c.getPackages()) {
+                if (p.getTrackingId().equals(trackingId)) return p;
             }
         }
         // inactive container
@@ -161,5 +165,24 @@ public class FreightTerminal {
      */
     public void printDailyReport() {
         // TODO M10
+        System.out.println("=== Daily Report: " + terminalName + " ===");
+        System.out.println("Packages received:  " + getTotalPackagesShipped());
+        System.out.println("Containers packed:  " + dispatchedContainers.size()); // .size and not dispatchContainers by it self
+        System.out.println("Packages shipped:   " + getTotalPackagesShipped());
+        System.out.println("Total revenue:      $" + String.format("%.2f", getTotalRevenue()));
+
+        System.out.println();
+        System.out.println("Revenue by destination:");
+
+        for (Container c : dispatchedContainers) {
+            System.out.println("  " + c.getDestination() + ":    $" +
+                    String.format("%.2f", c.getTotalRevenue()) + " (" +
+                    c.getPackageCount() + " packages)");
+        }
     }
-}
+        }
+
+
+
+
+

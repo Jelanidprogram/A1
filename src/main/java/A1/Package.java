@@ -54,15 +54,21 @@ public class Package {
         if (weightKg <= 0) {
             throw new IllegalArgumentException("Weight must not be less than or equivalent to 0!");
         }
-
+        if (lengthCm <= 0) {
+            throw new IllegalArgumentException("Length must be greater than 0");
+        }
+        if (widthCm <= 0) {
+            throw new IllegalArgumentException("Width must be greater than 0");
+        }
+        if (heightCm <= 0) {
+            throw new IllegalArgumentException("Height must be greater than 0");
+        }
         if (senderName == null || senderName.equals("") && (receiverName == null || receiverName.equals(" ") && (weightKg <= 0))) {
             throw new IllegalArgumentException("Please check your fields, they are not meeting the requirements");
         }
 
-        if (destination.equals("Trinidad") || destination.equals("Barbados") || destination.equals("Jamaica") || destination.equals("Antigua") || destination.equals("Grenada")) {
-            System.out.println(VALID_DESTINATIONS);
-        } else {
-            throw new IllegalArgumentException("Destination not found");
+        if (!VALID_DESTINATIONS.contains(destination)) {
+            throw new IllegalArgumentException("Destination not found: " + destination);
         }
             trackingId = String.format("PKG-%04d", nextTrackingNumber);
             nextTrackingNumber++;
@@ -171,7 +177,7 @@ public class Package {
                 getBillableWeightKg(), getShippingCost());
 
         if (isFragile) {
-            base += "  [FRAGILE]";
+            base+="  [FRAGILE]";  // under the conditional that the item is fragile that it is appended to the String
         }
         return base;
 

@@ -55,7 +55,7 @@ public class Container {
 
     // --- Getters ---
     // TODO M4: Write getters for containerId, destination, maxWeightKg
-    public String getContainderID() {
+    public String getContainerId() {
         return containerId;
     }
 
@@ -151,7 +151,7 @@ public class Container {
         }
 
         s.append("  Container revenue: $");
-        s.append(String.format(".2f",getTotalRevenue()));
+        s.append(String.format("%.2f",getTotalRevenue()));
 
         return s.toString();
 
